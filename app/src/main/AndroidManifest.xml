@@ -15,32 +15,46 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/huellita1"
+        android:icon="@drawable/patita"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ListaMascotas"
-            android:parentActivityName=".MainActivity">
+        <activity
+            android:name=".ListaMascotas"
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.monti.mascotas.MainActivity"
-                >
+                android:value="com.monti.mascotas.MainActivity" >
             </meta-data>
         </activity>
-
-        <activity android:name=".Favoritas"
-            android:parentActivityName=".ListaMascotas">
+        <activity
+            android:name=".Favoritas"
+            android:parentActivityName=".ListaMascotas" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.monti.mascotas.ListaMascotas"
-               >
+                android:value="com.monti.mascotas.ListaMascotas" >
+            </meta-data>
+        </activity>
+        <activity
+            android:name=".Contacto"
+            android:parentActivityName=".ListaMascotas" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.monti.mascotas.ListaMascotas" >
+            </meta-data>
+        </activity>
+        <activity android:name=".Acerca"
+            android:parentActivityName=".ListaMascotas" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.monti.mascotas.ListaMascotas" >
             </meta-data>
         </activity>
     </application>

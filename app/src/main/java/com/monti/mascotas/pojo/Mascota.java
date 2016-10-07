@@ -1,8 +1,5 @@
-package com.monti.mascotas;
+package com.monti.mascotas.pojo;
 
-/**
- * Created by Susana on 01/10/2016.
- */
 public class Mascota {
     private String nombre;
     private int foto;

@@ -1,43 +1,57 @@
 package com.monti.mascotas;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.Toast;
+
+import com.monti.mascotas.adapter.MascotaAdaptador;
+import com.monti.mascotas.adapter.PageAdapter;
+import com.monti.mascotas.fragment.PerfilFragment;
+import com.monti.mascotas.fragment.RecyclerViewFragment;
+import com.monti.mascotas.pojo.Mascota;
 
 import java.util.ArrayList;
 
 
 public class ListaMascotas extends AppCompatActivity {
-    ArrayList<Mascota> misMascotas;
-    private RecyclerView listaMascotas;
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_mascotas);
 
-        Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
-        setSupportActionBar(miActionBar);
+ //       getSupportFragmentManager().beginTransaction().add(R.id.)
 
-        ActionBar actionBar = getSupportActionBar();
+//***********
+//        Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
+//        setSupportActionBar(miActionBar);
+
+//        ActionBar actionBar = getSupportActionBar();
       //  actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setIcon(R.drawable.huellaback);
-        actionBar.setHomeAsUpIndicator(R.drawable.back);
-        actionBar.setTitle("");
+
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setTitle("");
+//        actionBar.setDisplayShowTitleEnabled(false);
+//        actionBar.setDisplayShowTitleEnabled(true);
+//        actionBar.setLogo(R.drawable.huellaback);
+       // actionBar.setHomeAsUpIndicator(R.drawable.back);
+
+
+
         //Add the following code to make the up arrow white:
         //final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         //upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
@@ -57,45 +71,46 @@ getSupportActionBar().setTitle("My new title"); // set the top title
 String title = actionBar.getTitle().toString(); // get the title
 actionBar.hide();
          */
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        listaMascotas = (RecyclerView) findViewById(R.id.rvMascotas);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        if (toolbar != null){
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Mascotas");
+        }
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        setUpViewpager();
+    }
 
-        listaMascotas.setLayoutManager(llm);
+    private void setUpViewpager(){
+    viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), agregarFragments()));
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.house);
+        tabLayout.getTabAt(1).setIcon(R.drawable.face);
+    }
 
-        misMascotas = new ArrayList<Mascota>();
-        misMascotas.add(new Mascota("Garfield", R.drawable.gardfielito));
-        misMascotas.add(new Mascota("Miss", R.drawable.gatito));
-        misMascotas.add(new Mascota("Pluto", R.drawable.plutito));
-        misMascotas.add(new Mascota("Santa", R.drawable.santito));
-        misMascotas.add(new Mascota("Scooby", R.drawable.scoobyto));
-        misMascotas.add(new Mascota("Tom", R.drawable.tomito));
+    private ArrayList<Fragment> agregarFragments(){
+        ArrayList<Fragment> fragments = new ArrayList<>();
 
-        //     Toast.makeText(ListaMascotas.this, "He creado todas las mascotas ", Toast.LENGTH_SHORT).show();
-        //  Snackbar.make(nose, "Estooooy pasando........", Snackbar.LENGTH_SHORT);
+        fragments.add(new RecyclerViewFragment());
+       fragments.add(new PerfilFragment());
 
-        inicializaAdaptador();
-
-}
-
-
-    private void inicializaAdaptador() {
-        MascotaAdaptador adaptador = new MascotaAdaptador(misMascotas);
-        listaMascotas.setAdapter(adaptador);
+        return fragments;
     }
 
     public void irFavoritas(){
         Intent intent = new Intent(this, Favoritas.class);
         startActivity(intent);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
+     //   getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_opciones, menu);
         return true;
     }
 
@@ -108,13 +123,26 @@ actionBar.hide();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
      //   Toast.makeText(ListaMascotas.this, Integer.toString(item.getItemId()), Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
             case R.id.vStart:
-               irFavoritas();
-
-                return true;
+                irFavoritas();
+                break;
+            case R.id.mpContacto:
+                intent = new Intent(this, Contacto.class);
+                startActivity(intent);
+                break;
+            case R.id.mpAcerca:
+                intent = new Intent(this, Acerca.class);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 }

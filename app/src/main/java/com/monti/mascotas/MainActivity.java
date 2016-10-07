@@ -8,15 +8,22 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
-        setSupportActionBar(miActionBar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(R.string.app_name);
+        }
+// ****************
+//        Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
+//        setSupportActionBar(miActionBar);
 
         Button btnInicio = (Button) findViewById(R.id.btnIniciar);
 
@@ -31,6 +38,4 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
 }

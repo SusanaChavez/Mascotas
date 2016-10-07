@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:background="@color/colorPrimary"
     android:elevation="@dimen/elevacion_actionbar"
-    app:navigationIcon="@drawable/huellaback"
     app:titleTextColor="@android:color/white"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
